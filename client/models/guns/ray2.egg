@@ -1,0 +1,100 @@
+<CoordinateSystem> { Z-up }
+
+<Comment> { "Egg laid by Chicken for Blender v1.0" }
+
+<Material> Material {
+  <Scalar> diffr {0.800000011921}
+  <Scalar> diffg {0.800000011921}
+  <Scalar> diffb {0.800000011921}
+  <Scalar> specr {0.25}
+  <Scalar> specg {0.25}
+  <Scalar> specb {0.25}
+  <Scalar> shininess {12.5}
+}
+<Texture> Material {
+  "/home/arikel/programmation/panda3d/freelancer/client/models/guns/ray2.png"
+}
+<Group> Cube {
+  <Transform> {
+    <Matrix4> {
+      1.000000 0.000000 -0.000000 0.000000
+      0.000000 -1.000000 0.000000 0.000000
+      0.000000 -0.000000 -1.000000 0.000000
+      0.000000 0.000000 0.000000 1.000000
+    }
+  }
+  <VertexPool> Cube {
+    <Vertex> 0 {
+      0.000000 0.000000 0.500000
+      <UV> { 1.000000 0.000000 }
+    }
+    <Vertex> 1 {
+      0.000000 2.000000 0.000000
+      <UV> { -0.000000 1.000000 }
+    }
+    <Vertex> 2 {
+      0.000000 0.000000 -0.500000
+      <UV> { 0.000000 -0.000000 }
+    }
+    <Vertex> 3 {
+      0.500000 -0.000000 -0.000000
+      <UV> { 1.000000 0.000000 }
+    }
+    <Vertex> 4 {
+      0.000000 2.000000 0.000000
+      <UV> { -0.000000 1.000000 }
+    }
+    <Vertex> 5 {
+      -0.500000 0.000000 -0.000000
+      <UV> { 0.000000 -0.000000 }
+    }
+    <Vertex> 6 {
+      0.353553 -0.000000 -0.353553
+      <UV> { 1.000000 0.000000 }
+    }
+    <Vertex> 7 {
+      0.000000 2.000000 0.000000
+      <UV> { -0.000000 1.000000 }
+    }
+    <Vertex> 8 {
+      -0.353553 0.000000 0.353553
+      <UV> { 0.000000 -0.000000 }
+    }
+    <Vertex> 9 {
+      0.353553 0.000000 0.353553
+      <UV> { 1.000000 0.000000 }
+    }
+    <Vertex> 10 {
+      0.000000 2.000000 0.000000
+      <UV> { -0.000000 1.000000 }
+    }
+    <Vertex> 11 {
+      -0.353553 0.000000 -0.353553
+      <UV> { 0.000000 -0.000000 }
+    }
+  }
+  <Polygon> {
+    <TRef> { Material }
+    <MRef> { Material }
+    <Normal> { -1.000000 0.000000 0.000000 }
+    <VertexRef> { 0 1 2 <Ref> { Cube } }
+  }
+  <Polygon> {
+    <TRef> { Material }
+    <MRef> { Material }
+    <Normal> { -0.000000 -0.000000 1.000000 }
+    <VertexRef> { 3 4 5 <Ref> { Cube } }
+  }
+  <Polygon> {
+    <TRef> { Material }
+    <MRef> { Material }
+    <Normal> { 0.707107 -0.000000 0.707107 }
+    <VertexRef> { 6 7 8 <Ref> { Cube } }
+  }
+  <Polygon> {
+    <TRef> { Material }
+    <MRef> { Material }
+    <Normal> { -0.707107 -0.000000 0.707107 }
+    <VertexRef> { 9 10 11 <Ref> { Cube } }
+  }
+}
