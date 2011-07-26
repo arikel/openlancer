@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<ships>
+
+<ship>
+	<name>sabre</name>
+	
+	<model>sabreNew</model>
+	
+	<HP coque="100" shield="100" gun="500"></HP>
+	
+	<pushEngine force="1000" speed="320" sideForce="200" sideForceFactor="0.2"></pushEngine>
+	
+	<steerEngine hForce="10" hSpeed="2" pForce="10" pSpeed="2" rForce="10" rSpeed="2"></steerEngine>
+	
+	<gunslots>
+		<gunslot point = "1.5, 0.0, 2.0" classe="2"></gunslot>
+		<gunslot point = "-1.5, 0.0, 2.0" classe="2"></gunslot>
+		<gunslot point = "1.5, 0.0, 1.0" classe="2"></gunslot>
+		<gunslot point = "-1.5, 0.0, 1.0" classe="2"></gunslot>
+		<gunslot point = "1.8, 0.0, -0.0" classe="2"></gunslot>
+		<gunslot point = "-1.8, 0.0, -0.0" classe="2"></gunslot>
+		
+		<equippedGun name="laser1" active="true" slot="0"></equippedGun>
+		<equippedGun name="laser2" active="true" slot="1"></equippedGun>
+		<equippedGun name="laser1" active="true" slot="2"></equippedGun>
+		<equippedGun name="laser2" active="true" slot="3"></equippedGun>
+	</gunslots>
+			
+	<cargo>50</cargo>
+</ship>
+
+<ship>
+	<name>npc</name>
+	
+	<model>generic_mob</model>
+	
+	<HP coque="100" shield="100" gun="500"></HP>
+	
+	<pushEngine force="1000" speed="320" sideForce="200" sideForceFactor="0.2"></pushEngine>
+	
+	<steerEngine hForce="10" hSpeed="2" pForce="10" pSpeed="2" rForce="10" rSpeed="2"></steerEngine>
+	
+	<gunslots>
+		<gunslot point = "1.5, 0.0, 2.0" classe="2"></gunslot>
+		<gunslot point = "-1.5, 0.0, 2.0" classe="2"></gunslot>
+		<gunslot point = "1.5, 0.0, 1.0" classe="2"></gunslot>
+		<gunslot point = "-1.5, 0.0, 1.0" classe="2"></gunslot>
+	
+		<equippedGun name="laser1" active="true" slot="0"></equippedGun>
+		<equippedGun name="laser1" active="true" slot="1"></equippedGun>
+		<equippedGun name="laser2" active="true" slot="2"></equippedGun>
+		<equippedGun name="laser2" active="true" slot="3"></equippedGun>
+	</gunslots>
+
+	<cargo>50</cargo>
+</ship>
+
+</ships>

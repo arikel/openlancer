@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+
+<items>
+<!--
+<item>
+<name></name>
+<image></image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+//-->
+
+<item>
+<name>bronze</name>
+<image>bronze</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>cardamine</name>
+<image>carda</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>copper</name>
+<image>copper</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>empty</name>
+<image> </image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>gold</name>
+<image>gold</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>lead</name>
+<image>lead</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+
+<item>
+<name>oil</name>
+<image>oil</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+<item>
+<name>wood</name>
+<image>wood</image>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</item>
+
+</items>
