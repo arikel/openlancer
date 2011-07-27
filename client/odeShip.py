@@ -211,7 +211,7 @@ class Ship(Body):
 		
 		# angular motor 1 : H
 		self.aMotor1 = OdeAMotorJoint(self.world)
-		self.aMotor1.attachBody(self.body, 1)
+		self.aMotor1.attachBody(self.body, 0)
 		self.aMotor1.setMode(0)
 		self.aMotor1.setNumAxes(1)
 		self.aMotor1.setAxis(0, 1, 0, 0, 1)
@@ -221,7 +221,7 @@ class Ship(Body):
 		
 		# angular motor 2 : P
 		self.aMotor2 = OdeAMotorJoint(self.world)
-		self.aMotor2.attachBody(self.body, 1)
+		self.aMotor2.attachBody(self.body, 0)
 		self.aMotor2.setMode(0)
 		self.aMotor2.setNumAxes(1)
 		self.aMotor2.setAxis(0, 1, 1, 0, 0)
@@ -230,7 +230,7 @@ class Ship(Body):
 		
 		# angular motor 3 : R
 		self.aMotor3 = OdeAMotorJoint(self.world)
-		self.aMotor3.attachBody(self.body, 1)
+		self.aMotor3.attachBody(self.body, 0)
 		self.aMotor3.setMode(0)
 		self.aMotor3.setNumAxes(1)
 		self.aMotor3.setAxis(0, 1, 0, 1, 0)
