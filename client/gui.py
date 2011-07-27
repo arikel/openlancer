@@ -824,14 +824,15 @@ class TopButton(DirectButton):
 		self.img.setColor(0.7,0.7,0.9,1)
 		self.img.reparentTo(self)
 		#self["image"].setTransparency(True),
+		self.img.setColor(0.8,0.8,0.8,1.0)
 		
 		self.bind(DGG.ENTER, command=self.onHover, extraArgs=[self])
 		self.bind(DGG.EXIT, command=self.onOut, extraArgs=[self])
 		
-	def onHover(self, extraArgs, sentArgs):
-		self.img.setColor(0.95,0.95,1.0,1)
+	def onHover(self, extraArgs=[], sentArgs=[]):
+		self.img.setColor(0.95,0.95,1.0,1.0)
 		
-	def onOut(self, extraArgs, sentArgs):
+	def onOut(self, extraArgs=[], sentArgs=[]):
 		#self["text_fg"] = (0.8,0.9,1,1)
 		#self["text_shadow"] = (0.0,0.5,0.95,1)
 		#self["image_color"] = (0.7,0.7,0.9,1)
@@ -863,22 +864,32 @@ class SpaceTopButtonBar:
 		
 class GroundTopButtonBar:
 	def __init__(self):
-		self.buttonBaseport = TopButton(-0.4,0.9,"baseport")
+		self.buttonBaseport = TopButton(-0.4,0.9,"dock")
 		self.buttonBar = TopButton(-0.2,0.9,"bar")
-		self.buttonShop = TopButton(0.0,0.9,"shop")
+		self.buttonLoot = TopButton(0.0,0.9,"shop")
+		self.buttonEquip = TopButton(0.2,0.9,"equip")
+		self.buttonShip = TopButton(0.4,0.9,"ship")
 		
 	def hide(self):
 		self.buttonBaseport.hide()
 		self.buttonBar.hide()
-		self.buttonShop.hide()
+		self.buttonLoot.hide()
+		self.buttonEquip.hide()
+		self.buttonShip.hide()
+		
 	def show(self):
 		self.buttonBaseport.show()
 		self.buttonBar.show()
-		self.buttonShop.show()
+		self.buttonLoot.show()
+		self.buttonEquip.show()
+		self.buttonShip.show()
+		
 	def destroy(self):
 		self.buttonBaseport.destroy()
 		self.buttonBar.destroy()
-		self.buttonShop.destroy()
+		self.buttonLoot.destroy()
+		self.buttonEquip.destroy()
+		self.buttonShip.destroy()
 
 class SpaceLabel(DirectButton):
 	def __init__(self, x, y, genre, name):
