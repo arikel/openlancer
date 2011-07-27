@@ -11,6 +11,7 @@ show-frame-rate-meter #t
 win-size 800 600
 #win-size 1280 960
 #win-size 1024 768
+win-fixed-size 1
 #yield-timeslice 0 
 #client-sleep 0 
 #multi-sleep 0
@@ -145,7 +146,7 @@ base.setFrameRateMeter(True)
 base.setBackgroundColor(0,0,0)
 base.accept("escape", g.getEscape, [])
 
-
+render.setAntialias(AntialiasAttrib.MMultisample)
 
 run()
 

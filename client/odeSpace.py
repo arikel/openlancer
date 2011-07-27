@@ -85,8 +85,8 @@ class SpaceCamManager:
 			#base.camera.lookAt(render.getRelativePoint(self.wm.ship.model, Point3(0,1000,0)))
 			base.camera.lookAt(self.targetNode)
 			base.camera.setR(self.wm.ship.model.getR())
-			#if self.camCube.body.getLinearVel().length()>500.0:
-			#	self.camCube.body.setLinearVel(0,0,0)
+			if self.camCube.body.getLinearVel().length()>500.0:
+				self.camCube.body.setLinearVel(0,0,0)
 			self.camCube.body.setLinearVel(self.camCube.body.getLinearVel()*0.95)
 			
 			
