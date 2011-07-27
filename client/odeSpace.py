@@ -65,12 +65,13 @@ class SpaceCamManager:
 		self.basePoint = Point3(0,-20, 3)
 		self.decal = Vec3(5.5,0,0.5)
 
-
+		self.update()
+		
 	def update(self, dx=0, dy=0):
 		if self.mode == "manual":
 			#target = render.getRelativePoint(self.ship.model, Point3(0+dx*4,-10,3+dy*1.5))
 			#self.decal = Vec3(dx*5.5,0,dy*0.5)
-			self.targetNode.setPos(0,500,0)
+			self.targetNode.setPos(0,300,0)
 			self.baseNode.setHpr(0,0,0)
 			self.baseNode.setPos(dx*5, -20, 2+dy*0.5)
 			
@@ -78,17 +79,23 @@ class SpaceCamManager:
 			target = self.baseNode.getPos(render)
 			
 			dist = (target - base.camera.getPos()).length()
-			self.camCube.body.addForce((target - self.camCube.body.getPosition())*dist*12.55)
+			#self.camCube.body.addForce((target - self.camCube.body.getPosition())*dist*12.55)
+			self.camCube.body.addForce((target - self.camCube.body.getPosition())*dist)
 			base.camera.setPos(self.camCube.body.getPosition())
 			#base.camera.lookAt(render.getRelativePoint(self.wm.ship.model, Point3(0,1000,0)))
 			base.camera.lookAt(self.targetNode)
 			base.camera.setR(self.wm.ship.model.getR())
-			self.camCube.body.setLinearVel(self.camCube.body.getLinearVel()*0.94)
-
+			#if self.camCube.body.getLinearVel().length()>500.0:
+			#	self.camCube.body.setLinearVel(0,0,0)
+			self.camCube.body.setLinearVel(self.camCube.body.getLinearVel()*0.95)
+			
+			
+			#base.camera.setQuat(render, Quat(self.camCube.body.getQuaternion()))
+			
 			
 		elif self.mode == "auto":
-			self.targetNode.setPos(0,500,0)
-			self.baseNode.setHpr(0,0,0)
+			self.targetNode.setPos(0.0,300,0.0)
+			self.baseNode.setHpr(0.0,0.0,0.0)
 			self.baseNode.setPos(0, -16, 5)
 			
 			#target = render.getRelativePoint(self.wm.ship.model, self.basePoint)
@@ -219,11 +226,13 @@ class SpaceOdeWorldManager(DirectObject):
 		self.trailPE = AriTrail(self.ship.model,10,0.0)
 		#self.trailPE2 = AriTrail(self.gun2,10,0.0)
 		
+		skyName = "skyBox06"
 		self.sky = SkyBox()
-		self.sky.load("skyBox03")
-		self.sky.set("skyBox03")
+		self.sky.load(skyName)
+		self.sky.set(skyName)
+		self.currentSkyName = skyName
 		self.sky.stop()
-		self.sky.currentModel.hide(BitMask32.bit(1))
+		#self.sky.currentModel.hide(BitMask32.bit(1))
 		
 		
 		#-------------------------------------------------------------------
@@ -266,7 +275,7 @@ class SpaceOdeWorldManager(DirectObject):
 		#print "Starting the space world."
 		self.acceptAll()
 		self.task = taskMgr.doMethodLater(1.5, self.worldTask, "spaceWorldTask")
-		self.sky.set("skyBox03")
+		self.sky.set(self.currentSkyName)
 		self.PE.start()
 		self.showAll()
 		self.radar.hide()
@@ -519,6 +528,9 @@ class SpaceOdeWorldManager(DirectObject):
 	def setMode(self, mode):
 		self.mode = str(mode)
 		self.camHandler.mode = self.mode
+		#if self.mode == "manual" or self.mode == "auto":
+		#	self.camCube.body.setPosition(self.wm.ship.model.getPos()+(Point3(0,-20, 3)))
+			
 		
 	def toggleMode(self):
 		if self.mode == "auto":
