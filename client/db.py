@@ -30,6 +30,13 @@ class FileParserBase:
 		res = str(node.childNodes[0].data)#.lower()
 		res = res.strip()
 		return res
+	
+	def getSimpleInt(self, dom, name):
+		return int(self.getSimpleData(dom, name))
+		
+	def getSimpleFloat(self, dom, name):
+		return float(self.getSimpleData(dom, name))
+		
 		
 #-----------------------------------------------------------------------
 # Item DB - itemDb.xml
@@ -152,41 +159,58 @@ class GunData:
 	def __init__(self, name):
 		self.name = name
 		self.classe = 1
-		self.coqueDmg = 10
+		self.energyCost = 10
 		self.shieldDmg = 10
+		self.coqueDmg = 10
 		self.lifeTime = 2.0
-		self.speed = 300
+		self.speed = 300.0
 		self.ray = 0.5
 		self.refire = 0.2
-		self.energyCost = 10
 		self.sound = "laser"
 		self.model = "ray1"
+		
+		self.imagePath = ""
+		self.desc = ""
+		self.longDesc = ""
+		self.priceSell = 1000 # what the players gets if he sells the item, per unit
+		self.priceBuy = 1500 # how much it costs to the player to buy one of those
 
-gunDb = {}
-gunDb["laser1"] = GunData("laser1")
-gunDb["laser1"].classe = 2
-gunDb["laser1"].speed = 150
-gunDb["laser1"].ray = 0.25
-gunDb["laser1"].sound = "laser_mono"
-gunDb["laser1"].model = "ray3"
-gunDb["laser1"].refire = 0.5
+class GunFileParser(FileParserBase):
+	def __init__(self):
+		f = open("gunDb.xml")
+		self.xmlData = f.read()
+		f.close()
+		self.dom = minidom.parseString(self.xmlData)
+		self.dom = self.getNode(self.dom, "guns")
+		
+		self.gunDb = {} # name : gunData
+		
+		self.gunNodes = self.getNodes(self.dom, "gun")
+		
+		for gun in self.gunNodes:
+			name = self.getSimpleData(gun, "name")
+			gunData = GunData(name)
+			
+			imagePath = self.getSimpleData(gun, "image")
+			gunData.imagePath = "img/items/" + imagePath + ".png"
+			gunData.classe = self.getSimpleData(gun, "classe")
+			gunData.energyCost = self.getSimpleFloat(gun, "energyCost")
+			gunData.shieldDmg = self.getSimpleFloat(gun, "shieldDmg")
+			gunData.coqueDmg = self.getSimpleFloat(gun, "coqueDmg")
+			gunData.lifeTime = self.getSimpleFloat(gun, "lifeTime")
+			gunData.speed = self.getSimpleFloat(gun, "speed")
+			gunData.ray = self.getSimpleFloat(gun, "ray")
+			gunData.refire = self.getSimpleFloat(gun, "refire")
+			gunData.sound = self.getSimpleData(gun, "sound")
+			gunData.model = self.getSimpleData(gun, "model")
+			gunData.desc = self.getSimpleData(gun, "desc")
+			gunData.longDesc = self.getSimpleData(gun, "longDesc")
+			gunData.priceSell = self.getSimpleInt(gun, "priceSell")
+			gunData.priceBuy = self.getSimpleInt(gun, "priceBuy")
+			
+			self.gunDb[name] = gunData
 
-
-gunDb["laser2"] = GunData("laser2")
-gunDb["laser2"].classe = 2
-gunDb["laser2"].speed = 200
-gunDb["laser2"].ray = 0.2
-gunDb["laser2"].sound = "laser_mono"
-gunDb["laser2"].model = "ray2"
-gunDb["laser2"].refire = 0.4
-
-gunDb["laser3"] = GunData("laser3")
-gunDb["laser3"].classe = 2
-gunDb["laser3"].speed = 200
-gunDb["laser3"].ray = 0.2
-gunDb["laser3"].sound = "laser_mono"
-gunDb["laser3"].model = "ray1"
-gunDb["laser3"].refire = 0.2
+gunDb = GunFileParser().gunDb
 
 #-----------------------------------------------------------------------
 # Ship DB - shipDb.xml
@@ -197,11 +221,14 @@ class ShipData:
 		self.gunSlots = [] # list of [point, classe, gunData, active]
 		self.storedGuns = [] # list of unequipped guns : [name]
 		
-	def setHP(self, coque, shield, gun):
-		self.coqueHPMax = int(coque)
-		self.shieldHPMax = int(shield)
-		self.gunHPMax = int(gun)
+	def initHP(self, coque, shield, gun):
+		self.coqueHPMax = float(coque)
+		self.shieldHPMax = float(shield)
+		self.gunHPMax = float(gun)
 		
+		self.coqueHP = self.coqueHPMax
+		self.shieldHP = self.shieldHPMax
+		self.gunHP = self.gunHPMax
 		
 	def setPushEngine(self, force, speed, sideForce, sideForceFactor):
 		self.pushForce = float(force)
@@ -273,7 +300,7 @@ class ShipFileParser(FileParserBase):
 			HPcoque = HP.getAttribute("coque")
 			HPshield = HP.getAttribute("shield")
 			HPgun = HP.getAttribute("gun")
-			shipData.setHP(HPcoque, HPshield, HPgun)
+			shipData.initHP(HPcoque, HPshield, HPgun)
 			
 			PE = self.getNode(ship, "pushEngine")
 			force = PE.getAttribute("force")
@@ -306,7 +333,8 @@ class ShipFileParser(FileParserBase):
 					print "(ShipFileParser) Error : couldn't process gunslot position :("
 				
 				shipData.addGunSlot(point, classe)
-			
+			#-----------------------------------------------------------
+			# default equipped guns, offered on purchase of the ship
 			eqGunNodes = self.getNodes(gunsNode, "equippedGun") # node of all guns equipped
 			for gun in eqGunNodes:
 				gunName = str(gun.getAttribute("name"))
@@ -371,7 +399,10 @@ class ShopData:
 #-----------------------------------------------------------------------
 # System DB - systemDb.xml
 #-----------------------------------------------------------------------
-
+class SystemData:
+	def __init__(self, name):
+		self.name = name
+		
 #-----------------------------------------------------------------------
 # Base DB - baseDb.xml
 #-----------------------------------------------------------------------
@@ -478,7 +509,9 @@ class PlayerFileParser(FileParserBase):
 		#print "Setting player ship from DB : %s" % (shipname)
 		
 		# equipped guns
-		# the gun slots of the ship better be already made with data from shipDb, at this point
+		# the gun slots of the ship better be already made (and emptied of default guns) with data
+		# from shipDb, at this point
+		
 		gunsNode = self.getNode(shipnode, "guns")
 		eqGunNodes = self.getNodes(gunsNode, "equippedGun") # node of all guns equipped
 		for gun in eqGunNodes:

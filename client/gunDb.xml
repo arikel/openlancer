@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+
+<guns>
+<!--
+<gun>
+<name></name>
+<image></image>
+<classe></classe>
+<energyCost></energyCost>
+<shieldDmg></shieldDmg>
+<coqueDmg></coqueDmg>
+<lifeTime></lifeTime>
+<speed></speed>
+<ray></ray>
+<refire></refire>
+<sound></sound>
+<model></model>
+<desc>blah...</desc>
+<longDesc>blah blah</longDesc>
+<priceSell>50</priceSell>
+<priceBuy>60</priceBuy>
+</gun>
+//-->
+
+	<gun>
+		<name>noobgun</name>
+		<image>laser</image>
+		<classe>1</classe>
+		<energyCost>10</energyCost>
+		<shieldDmg>10</shieldDmg>
+		<coqueDmg>10</coqueDmg>
+		<lifeTime>2.0</lifeTime>
+		<speed>500</speed>
+		<ray>0.5</ray>
+		<refire>0.2</refire>
+		<sound>laser_mono</sound>
+		<model>ray1</model>
+		<desc>blah...</desc>
+		<longDesc>blah blah</longDesc>
+		<priceSell>50</priceSell>
+		<priceBuy>60</priceBuy>
+	</gun>
+
+
+	<gun>
+		<name>laser1</name>
+		<image>laser</image>
+		<classe>2</classe>
+		<energyCost>10</energyCost>
+		<shieldDmg>10</shieldDmg>
+		<coqueDmg>10</coqueDmg>
+		<lifeTime>2.0</lifeTime>
+		<speed>500</speed>
+		<ray>0.2</ray>
+		<refire>0.2</refire>
+		<sound>laser_mono</sound>
+		<model>ray1</model>
+		<desc>blah...</desc>
+		<longDesc>blah blah</longDesc>
+		<priceSell>50</priceSell>
+		<priceBuy>60</priceBuy>
+	</gun>
+
+	<gun>
+		<name>laser2</name>
+		<image>laser</image>
+		<classe>2</classe>
+		<energyCost>18</energyCost>
+		<shieldDmg>12</shieldDmg>
+		<coqueDmg>20</coqueDmg>
+		<lifeTime>2.0</lifeTime>
+		<speed>500</speed>
+		<ray>0.2</ray>
+		<refire>0.3</refire>
+		<sound>laser_mono</sound>
+		<model>ray2</model>
+		<desc>blah...</desc>
+		<longDesc>blah blah</longDesc>
+		<priceSell>50</priceSell>
+		<priceBuy>60</priceBuy>
+	</gun>
+
+	<gun>
+		<name>laser3</name>
+		<image>laser</image>
+		<classe>3</classe>
+		<energyCost>25</energyCost>
+		<shieldDmg>30</shieldDmg>
+		<coqueDmg>20</coqueDmg>
+		<lifeTime>2.0</lifeTime>
+		<speed>500</speed>
+		<ray>0.2</ray>
+		<refire>0.45</refire>
+		<sound>slimeball_mono</sound>
+		<model>ray3</model>
+		<desc>blah...</desc>
+		<longDesc>blah blah</longDesc>
+		<priceSell>50</priceSell>
+		<priceBuy>60</priceBuy>
+	</gun>
+
+</guns>

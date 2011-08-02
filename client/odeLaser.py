@@ -33,12 +33,12 @@ for name in laserNameList:
 	laserModels[name] = m
 
 laserSounds = {}
-soundList = ["laser_mono", "laser2", "slimeball_mono"]
+soundList = ["laser_mono", "slimeball_mono"]
 for name in soundList:
-	laserSounds[name] = audio3d.loadSfx("sounds/wavs/" + name + ".wav")
-	laserSounds[name].setVolume(0.4)
+	laserSounds[name] = audio3d.loadSfx("sounds/lasers/" + name + ".ogg")
+	#laserSounds[name].setVolume(0.4)
 
-exploSound1 = audio3d.loadSfx("sounds/SOUNDS/FX/debri explo 3.wav")
+exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 #print pdir(exploSound1)
 exploSound1.setVolume(1.0)
 exploSound1.set3dMinDistance(100.0)
@@ -90,7 +90,7 @@ class Laser:
 		
 		if self.gunData.sound in laserSounds:
 			#self.sound = laserSounds[self.gunData.sound]
-			path = "sounds/wavs/" + self.gunData.sound + ".wav"
+			path = "sounds/lasers/" + self.gunData.sound + ".ogg"
 			self.sound = audio3d.loadSfx(path)
 			audio3d.attachSoundToObject(self.sound, self.model)
 			#audio3d.setSoundMaxDistance(self.sound, 150)

@@ -30,19 +30,21 @@ import sys, math, random, os.path, os, re
 			
 
 soundDic = {}
-soundDic["rollover"] = loader.loadSfx("sounds/SOUNDS/UI/ui_rollover.wav")
-soundDic["rollover"].setVolume(0.4)
+soundDic["rollover"] = loader.loadSfx("sounds/ui/hover01.ogg")
+#soundDic["rollover"].setVolume(0.4)
 
-soundDic["select_confirm"] = loader.loadSfx("sounds/SOUNDS/UI/ui_select_confirm.wav")
-soundDic["select_confirm"].setVolume(0.4)
-
-soundDic["hud_contract"] = loader.loadSfx("sounds/SOUNDS/UI/hud_contract.wav")
-soundDic["hud_contract"].setVolume(0.8)
-soundDic["hud_expand"] = loader.loadSfx("sounds/SOUNDS/UI/hud_expand.wav")
-soundDic["hud_expand"].setVolume(0.8)
+soundDic["select_confirm"] = loader.loadSfx("sounds/ui/click01.ogg")
+#soundDic["select_confirm"].setVolume(0.4)
 
 
+soundDic["hud_contract"] = loader.loadSfx("sounds/ui/click01.ogg")
+#soundDic["hud_contract"].setVolume(0.8)
 
+soundDic["hud_expand"] = loader.loadSfx("sounds/ui/click01.ogg")
+#soundDic["hud_expand"].setVolume(0.8)
+
+soundDic["radarSelect"] = loader.loadSfx("sounds/ui/click02.ogg")
+#soundDic["radarSelect"].setVolume(0.8)
 
 class MainButton(DirectButton):
 	def __init__(self, x, y, name):
@@ -128,7 +130,7 @@ class ItemButtonBase:
 			pad = (0,0),
 			borderWidth=(0.0,0.0),
 			relief = DGG.GROOVE,
-			rolloverSound = soundDic["rollover"],
+			rolloverSound = None, #soundDic["rollover"],
 			clickSound = soundDic["select_confirm"],
 		)
 		
@@ -144,12 +146,12 @@ class ItemButtonBase:
 		
 		self.frame2 = DirectButton(
 			frameSize = (-self.size2,self.size2,-self.size,self.size),
-			frameColor=(0.6, 0.6, 0.9, 0.1),
+			frameColor=(0.05, 0.4, 0.35, 0.8),
 			pos = (self.size+self.size2+0.01, 0, 0),
 			pad = (0,0),
 			borderWidth=(0.0,0.0),
 			relief = DGG.GROOVE,
-			rolloverSound = soundDic["rollover"],
+			rolloverSound = None, #soundDic["rollover"],
 			clickSound = soundDic["select_confirm"],
 		)
 		self.frame2.reparentTo(self.frame)
@@ -246,7 +248,12 @@ class ItemButtonBase:
 		self.frame.destroy()
 		
 	def update(self):
-		self.textItemDesc.setText(str(self.data.quant))
+		if self.data.name == "empty":
+			self.textItemDesc.setText("")
+			self.textItemName.setText("")
+			self.textItemPrice.setText("")
+		else:
+			self.textItemDesc.setText(str(self.data.quant))
 		
 #-----------------------------------------------------------------------
 class ItemListBase:
@@ -536,13 +543,14 @@ class ShopCenterPanel:
 	def __init__(self, shopgui):
 		self.gui = shopgui
 		self.frame = DirectFrame(
-			frameSize = (-0.45,0.45,-0.7,0.7),
-			frameColor=(0.7, 0.7, 0.9, 0.4),
+			frameSize = (-1.25,1.25,-0.7,0.7),
+			frameColor=(0.2, 0.6, 0.5, 0.7),
 			#pos = (0, 0, 0),
 			pos = (0,0,0),
 			pad = (0,0),
 			borderWidth=(0.0,0.0),
 			relief = DGG.GROOVE,
+			sortOrder = -10
 		)
 		self.buyButton = MainButton(0,-0.56,"BUY")
 		self.buyButton.reparentTo(self.frame)
@@ -798,7 +806,7 @@ class ShopGui:
 #-------------------------------------------------------------------------------
 class TopButton(DirectButton):
 	def __init__(self, x, y, name):
-		scale = 0.05
+		scale = 0.072
 		imgPath = "img/gui/topbuttons/" + str(name) + ".png"
 		
 		
@@ -814,7 +822,7 @@ class TopButton(DirectButton):
 			relief = None,
 			#relief = DGG.GROOVE,
 			#relief = DGG.RIDGE,
-			rolloverSound = soundDic["rollover"],
+			rolloverSound = None, #soundDic["rollover"],
 			clickSound = soundDic["select_confirm"],
 		)
 		
@@ -928,18 +936,20 @@ class SpaceLabel(DirectButton):
 		self.bind(DGG.EXIT, command=self.onOut, extraArgs=[self])
 		
 		path = "img/gui/label" + genre.title() + ".png"
-		self.img = makeImg(self.x-0.16, self.y, path, 0.025)
+		self.img = makeImg(-0.16, 0, path, 0.025)
+		self.img.reparentTo(self)
 		
-		self.distText = makeMsgLeft(self.x + 0.11, self.y - 0.016, "100")
+		self.distText = makeMsgLeft(0.11, - 0.016, "100")
 		self.distText["font"] = labelFont
 		self.distText["scale"] = (0.0045,0.005,1)
 		self.distText["fg"] = (0.8,0.9,1,1)
+		self.distText.reparentTo(self)
 		
 	def onHover(self, extraArgs, sentArgs):
 		self["text_fg"] = (0.95,0.85,0.2,1)
 		#self["text_shadow"] = (0.0,0.5,0.95,1)
 		self["frameColor"]=(0.4,0.85,1,0.2)
-		self.distText["fg"] = (0.8,0.9,1,1)
+		self.distText["fg"] = (0.95,0.85,0.2,1)
 		
 	def onOut(self, extraArgs, sentArgs):
 		self["text_fg"] = (0.8,0.9,1,1)
@@ -949,12 +959,18 @@ class SpaceLabel(DirectButton):
 		
 	def destroy(self):
 		self.img.destroy()
+		self.distText.destroy()
 		DirectButton.destroy(self)
+		
+		
 	def show(self):
 		self.img.show()
+		self.distText.show()
 		DirectButton.show(self)
+		
 	def hide(self):
 		self.img.hide()
+		self.distText.hide()
 		DirectButton.hide(self)
 		
 class SpaceGui:
@@ -970,13 +986,18 @@ class SpaceGui:
 		self.shieldHP = SpaceBarre(1,blue)
 		self.coqueHP = SpaceBarre(0,red)
 		
-		self.speedMsg = OnscreenText(pos=(-0.98, -0.755), fg = (1,1,1,1), scale = 0.05, align=TextNode.ACenter, mayChange = 1)
+		x = 0.4
+		y = -0.92
+		self.speedMsg = OnscreenText(pos=(x, y-0.015), fg = (1,1,1,1), scale = 0.05, align=TextNode.ACenter, mayChange = 1)
 		self.speedMsg["font"] = FONT
 		self.speedMsg["scale"] = (0.04,0.05,1.0)
+		self.speedImg = makeImg(x, y, "img/gui/speed.png", (0.11,1.0,0.07))
 		
-		self.speedImg = makeImg(-0.98, -0.74, "img/gui/speed.png", (0.11,1.0,0.07))
+		self.label1 = SpaceLabel(-0.8,-0.7,"loot", "item 1")
 		
-		self.label1 = SpaceLabel(-0.8,0.7,"loot", "item 1")
+		self.items = [self.topbar, self.laserHP, self.shieldHP, self.coqueHP, self.speedMsg, self.speedImg,
+			self.label1
+		]
 		
 		self.hide()
 		
@@ -984,31 +1005,17 @@ class SpaceGui:
 		self.speedMsg.setText(str(speed))
 		
 	def show(self):
-		self.topbar.show()
-		self.laserHP.show()
-		self.shieldHP.show()
-		self.coqueHP.show()
-		self.speedMsg.show()
-		self.speedImg.show()
-		self.label1.show()
+		for item in self.items:
+			item.show()
 		
 	def hide(self):
-		self.topbar.hide()
-		self.laserHP.hide()
-		self.shieldHP.hide()
-		self.coqueHP.hide()
-		self.speedMsg.hide()
-		self.speedImg.hide()
-		self.label1.hide()
+		for item in self.items:
+			item.hide()
 		
 	def destroy(self):
-		self.topbar.destroy()
-		self.laserHP.destroy()
-		self.shieldHP.destroy()
-		self.coqueHP.destroy()
-		self.speedMsg.destroy()
-		self.speedImg.destroy()
-		self.label1.destroy()
+		for item in self.items:
+			item.destroy()
+		
 		
 class GroundGui:
 	def __init__(self, playerdata):

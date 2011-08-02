@@ -16,13 +16,21 @@ from lightManager import LightManager
 from gui import *
 
 groundBgMusic = {}
-groundBgMusic["hesperida_shop"] = loader.loadSfx("sounds/MUSIC/music_bar_br04.wav")
+groundBgMusic["hesperida_shop"] = loader.loadSfx("sounds/musics/b423b42.ogg")
+groundBgMusic["hesperida_shop"].setVolume(0.99)
 
 class GroundManager:
 	def __init__(self, gm):
 		self.gm = gm # GameManager, from game.py
 		self.playerData = self.gm.playerData
 		self.gui = GroundGui(self.playerData)
+		
+		skyName = "hipshot1"
+		self.sky = SkyBox()
+		self.sky.load(skyName)
+		#self.sky.set(skyName)
+		self.currentSkyName = skyName
+		#self.sky.clear()
 		
 		self.bgMusic = groundBgMusic["hesperida_shop"]
 		self.bgMusic.setVolume(0.3)
@@ -36,10 +44,12 @@ class GroundManager:
 	def stop(self):
 		#self.bgMusic.stop()
 		taskMgr.add(self.fadeMusicTask, "fadeMusicTask")
+		self.sky.clear()
 		self.hide()
 	
 	def show(self):
 		self.gui.show()
+		self.sky.set(self.currentSkyName)
 		
 	def hide(self):
 		self.gui.hide()

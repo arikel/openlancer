@@ -49,7 +49,7 @@ class LightManager:
 		self.dlight.node().getLens().setNearFar(1, 200)
 		self.dlight.node().setScene(render)
 		self.dlight.node().getLens().setFilmSize(800,600)
-		#render.setLight(self.dlight)
+		render.setLight(self.dlight)
 		'''
 		
 		self.setPos((0,-20,2))

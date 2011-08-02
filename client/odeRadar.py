@@ -26,7 +26,7 @@ class OdeRadar:
 		self.targetNP = None
 		
 		self.interval = LerpScaleInterval(self.targetImg, 0.25, 0.15, 0)
-		self.sound = soundDic["hud_expand"]
+		self.sound = soundDic["radarSelect"]
 		
 		self.clearRadar()
 		

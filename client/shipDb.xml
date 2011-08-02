@@ -45,7 +45,9 @@
 		<gunslot point = "-1.5, 0.0, 2.0" classe="2"></gunslot>
 		<gunslot point = "1.5, 0.0, 1.0" classe="2"></gunslot>
 		<gunslot point = "-1.5, 0.0, 1.0" classe="2"></gunslot>
-	
+		<gunslot point = "1.8, 0.0, -0.0" classe="2"></gunslot>
+		<gunslot point = "-1.8, 0.0, -0.0" classe="2"></gunslot>
+		
 		<equippedGun name="laser1" active="true" slot="0"></equippedGun>
 		<equippedGun name="laser1" active="true" slot="1"></equippedGun>
 		<equippedGun name="laser2" active="true" slot="2"></equippedGun>

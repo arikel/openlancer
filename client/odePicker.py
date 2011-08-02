@@ -27,6 +27,7 @@ class OdePicker:
 		self.targetModel = None
 		
 	def update(self, mpos):
+		#pass
 		self.setCrosshair(mpos)
 		self.checkPickRay()
 		

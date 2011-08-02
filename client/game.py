@@ -38,7 +38,7 @@ class GameManager(FSM):
 	def __init__(self, filename):
 		FSM.__init__(self, 'Game')
 		
-		self.savedGame = PlayerFileParser("save2.xml")
+		self.savedGame = PlayerFileParser("save.xml")
 		self.playerData = self.savedGame.playerData
 		self.playerData.setShip(shipDb[self.playerData.ship.name])
 		
@@ -145,8 +145,10 @@ base.disableMouse()
 base.setFrameRateMeter(True)
 base.setBackgroundColor(0,0,0)
 base.accept("escape", g.getEscape, [])
+base.camLens.setNearFar(1,100000)
 
 render.setAntialias(AntialiasAttrib.MMultisample)
+
 
 run()
 

@@ -27,6 +27,9 @@ class GunSlot:
 		self.active = True
 		self.refireTimer = 0.0
 		
+	def equip(self, gundata):
+		self.setGunData(gundata)
+		
 	def setPos(self, pos):
 		self.pos = pos
 	
@@ -87,7 +90,7 @@ class Ship(Body):
 		self.updateLasers(dt)
 		self.reduceAngVel()
 		self.reduceLinVel()
-		self.geomVisual.setPos(0,self.getLinSpeed()*dt*10, 0)
+		#self.geomVisual.setPos(0,self.getLinSpeed()*dt*10, 0)
 		#self.geomVisual.setPos(self.body.getLinearVel())
 	#---------------------------------------------------------------
 	# guns
@@ -154,8 +157,8 @@ class Ship(Body):
 		
 		self.geomVisual = loader.loadModel("models/generic/box")
 		#self.geomVisual = loader.loadModel("models/generic/ball")
-		self.geomVisual.reparentTo(self.model)
-		self.geomVisual.setScale(self.scale*2)
+		#self.geomVisual.reparentTo(self.model)
+		#self.geomVisual.setScale(self.scale*2)
 		
 		self.id = self.geom.getId()
 		

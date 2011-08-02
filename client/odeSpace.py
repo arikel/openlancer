@@ -42,9 +42,9 @@ from odeRadar import *
 
 
 spaceBgMusic = {}
-spaceBgMusic["hesperida_space"] = loader.loadSfx("sounds/MUSIC/music_br_space.wav")
+spaceBgMusic["hesperida_space"] = loader.loadSfx("sounds/musics/cold_silence.ogg")
 spaceBgMusic["hesperida_space"].setLoop(True)
-spaceBgMusic["hesperida_space"].setVolume(0.3)
+spaceBgMusic["hesperida_space"].setVolume(0.4)
 
 class SpaceCamManager:
 	def __init__(self, wm):
@@ -226,7 +226,8 @@ class SpaceOdeWorldManager(DirectObject):
 		self.trailPE = AriTrail(self.ship.model,10,0.0)
 		#self.trailPE2 = AriTrail(self.gun2,10,0.0)
 		
-		skyName = "skyBox06"
+		#skyName = "skyBox06"
+		skyName = "purple0"
 		self.sky = SkyBox()
 		self.sky.load(skyName)
 		self.sky.set(skyName)
@@ -308,9 +309,9 @@ class SpaceOdeWorldManager(DirectObject):
 			self.sky.stop()
 			self.PE.stop()
 			self.task = None
-			#self.hideAll()
 		#else:
 			#print "Found no world running to stop though..."
+
 		self.hideAll()
 		self.ignoreAll()
 		self.gm.crosshair.setMode(1)
@@ -390,28 +391,28 @@ class SpaceOdeWorldManager(DirectObject):
 		
 		if ((id1 in self.lootDic) and (id2 in self.laserDic)):
 			#print "Collision cube / laser!!! l'oeuf tombe sur la pierre!"
-			exploSound1 = audio3d.loadSfx("sounds/SOUNDS/FX/debri explo 3.wav")
+			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.lootDic[id1].model)
 			exploSound1.play()
 			self.destroyLaser(id2)
 		
 		elif ((id2 in self.lootDic) and (id1 in self.laserDic)):
 			#print "Collision laser / cube!!! This is gonna hurt!"
-			exploSound1 = audio3d.loadSfx("sounds/SOUNDS/FX/debri explo 3.wav")
+			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.lootDic[id2].model)
 			exploSound1.play()
 			self.destroyLaser(id1)
 			
 		if ((id1 in self.shipDic) and (id2 in self.laserDic)):
 			#print "Collision ship / laser!"
-			exploSound1 = audio3d.loadSfx("sounds/SOUNDS/FX/debri explo 3.wav")
+			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.shipDic[id1].model)
 			exploSound1.play()
 			self.destroyLaser(id2)
 		
 		elif ((id2 in self.shipDic) and (id1 in self.laserDic)):
 			#print "Collision laser / ship!"
-			exploSound1 = audio3d.loadSfx("sounds/SOUNDS/FX/debri explo 3.wav")
+			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.shipDic[id2].model)
 			exploSound1.play()
 			self.destroyLaser(id1)
