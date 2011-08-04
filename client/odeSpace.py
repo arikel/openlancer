@@ -42,7 +42,8 @@ from odeRadar import *
 
 
 spaceBgMusic = {}
-spaceBgMusic["hesperida_space"] = loader.loadSfx("sounds/musics/cold_silence.ogg")
+#spaceBgMusic["hesperida_space"] = loader.loadSfx("sounds/musics/cold_silence.ogg")
+spaceBgMusic["hesperida_space"] = loader.loadSfx("sounds/musics/giii_8inst_1.ogg")
 spaceBgMusic["hesperida_space"].setLoop(True)
 spaceBgMusic["hesperida_space"].setVolume(0.4)
 
@@ -370,7 +371,7 @@ class SpaceOdeWorldManager(DirectObject):
 			self.destroyBase(id)
 		
 		self.gui.destroy()
-		
+		self.radar.destroy()
 		self.ship.destroy()
 		
 	def setKey(self, k, v):
@@ -408,6 +409,11 @@ class SpaceOdeWorldManager(DirectObject):
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.shipDic[id1].model)
 			exploSound1.play()
+			coqueDmg = self.laserDic[id2].gunData.coqueDmg
+			shieldDmg = self.laserDic[id2].gunData.shieldDmg
+			self.shipDic[id1].data.remShieldHP(shieldDmg)
+			if self.shipDic[id1].data.shieldHP <= 0.0:
+				self.shipDic[id1].data.remCoqueHP(coqueDmg)
 			self.destroyLaser(id2)
 		
 		elif ((id2 in self.shipDic) and (id1 in self.laserDic)):
@@ -415,6 +421,11 @@ class SpaceOdeWorldManager(DirectObject):
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
 			audio3d.attachSoundToObject(exploSound1, self.shipDic[id2].model)
 			exploSound1.play()
+			coqueDmg = self.laserDic[id1].gunData.coqueDmg
+			shieldDmg = self.laserDic[id1].gunData.shieldDmg
+			self.shipDic[id2].data.remShieldHP(shieldDmg)
+			if self.shipDic[id2].data.shieldHP <= 0.0:
+				self.shipDic[id2].data.remCoqueHP(coqueDmg)
 			self.destroyLaser(id1)
 			
 		
@@ -423,11 +434,25 @@ class SpaceOdeWorldManager(DirectObject):
 		if self.picker.targetGeomId != None:
 			#print "Selecting geom"
 			if self.picker.targetGeomId in self.shipDic:
-				self.radar.setTargetNP(self.shipDic[self.picker.targetGeomId].model)
+				self.radar.setTarget(
+					self.picker.targetGeomId,
+					self.shipDic[self.picker.targetGeomId].model,
+					self.shipDic[self.picker.targetGeomId].name,
+					"ship")
+					
 			elif self.picker.targetGeomId in self.lootDic:
-				self.radar.setTargetNP(self.lootDic[self.picker.targetGeomId].model)
+				self.radar.setTarget(
+					self.picker.targetGeomId,
+					self.lootDic[self.picker.targetGeomId].model,
+					self.lootDic[self.picker.targetGeomId].name,
+					"loot")
+					
 			elif self.picker.targetGeomId in self.baseDic:
-				self.radar.setTargetNP(self.baseDic[self.picker.targetGeomId].model)
+				self.radar.setTarget(
+					self.picker.targetGeomId,
+					self.baseDic[self.picker.targetGeomId].model,
+					self.baseDic[self.picker.targetGeomId].name,
+					"base")
 				
 		self.shoot()
 		
@@ -652,7 +677,9 @@ class SpaceOdeWorldManager(DirectObject):
 		
 		self.ship.update(dt)
 		
-
+		self.gui.laserHP.setVal(self.ship.data.gunHP)
+		self.gui.shieldHP.setVal(self.ship.data.shieldHP)
+		self.gui.coqueHP.setVal(self.ship.data.coqueHP)
 		
 		#---------------------------------------------------------------
 		# speed message

@@ -7,10 +7,10 @@ import os
 from pandac.PandaModules import *
 loadPrcFileData("setup", """sync-video 0
 show-frame-rate-meter #t
-#win-size 1280 1024
-win-size 800 600
-#win-size 1280 960
+#win-size 800 600
 #win-size 1024 768
+#win-size 1280 960
+#win-size 1280 1024
 win-fixed-size 1
 #yield-timeslice 0 
 #client-sleep 0 
@@ -76,7 +76,7 @@ class GameManager(FSM):
 	def getEscape(self):
 		if self.state == "Space":
 			if self.spaceWorldManager.camHandler.mode == "turret":
-				self.spaceWorldManager.setMode("auto")
+				self.spaceWorldManager.setMode("manual")
 			else:
 				self.prevState = "Space"
 				self.request("IntroMainMenu")
@@ -146,6 +146,7 @@ base.setFrameRateMeter(True)
 base.setBackgroundColor(0,0,0)
 base.accept("escape", g.getEscape, [])
 base.camLens.setNearFar(1,100000)
+base.camLens.setFov(80)
 
 render.setAntialias(AntialiasAttrib.MMultisample)
 

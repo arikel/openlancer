@@ -36,11 +36,13 @@ def makePlanet(name, scale = 1.0):
 
 class OdeBase:
 	def __init__(self, wm, name=""):
+		self.genre = "base"
 		self.wm = wm
 		self.scale = 1.0
 		
 		if name in spaceBaseDb:
 			self.data = spaceBaseDb[name]
+			self.name = name
 		else:
 			self.data = None
 			print "Warning : base name not found."

@@ -90,7 +90,7 @@ class Body(object):
 		self.angVelVisc = 0.99
 		
 		self.name = "body"
-		
+		self.genre = "body"
 	def setPos(self, pos):
 		self.body.setPosition(pos)
 		self.updatePos()
@@ -146,7 +146,7 @@ class Cube(Body):
 		self.linVelVisc = 0.99
 		self.angVelVisc = 0.99
 
-		
+		self.genre = "cube"
 		
 
 class Sphere(Body):
@@ -169,3 +169,4 @@ class Sphere(Body):
 		self.geom.setCategoryBits(odeBitMask["npc"])
 		self.geom.setBody(self.body)
 
+		self.genre = "sphere"

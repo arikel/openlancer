@@ -52,6 +52,7 @@ class GunSlot:
 class Ship(Body):
 	def __init__(self, worldmanager, data = None):
 		Body.__init__(self, worldmanager)
+		self.genre = "ship"
 		if data != None:
 			self.data = data
 			self.name = self.data.name
@@ -116,22 +117,27 @@ class Ship(Body):
 		for slot in self.gunSlots:
 			if slot.active:
 				if slot.refireTimer >= slot.gunData.refire:
-					# time to shoot this one
-					slot.refireTimer = 0.0
-					self.wm.shootLaser(
-						render.getRelativePoint(self.model, slot.pos),
-						targetPos,
-						self.body.getLinearVel(),
-						slot.gunData
-						)
+					if self.data.gunHP > slot.gunData.energyCost:
+						#print "firing gun, we need %s and we have %s laser HP left!" % (slot.gunData.energyCost, self.data.gunHP)
+						self.data.remGunHP(slot.gunData.energyCost)
 				
+						# time to shoot this one
+						slot.refireTimer = 0.0
+						self.wm.shootLaser(
+							render.getRelativePoint(self.model, slot.pos),
+							targetPos,
+							self.body.getLinearVel(),
+							slot.gunData
+							)
+					
 					
 	def updateLasers(self, dt):
 		for slot in self.gunSlots:
 			if slot.active:
 				slot.refireTimer += dt
 				#print "refire time updated : timer at %s" % (slot.gun.refireTimer)
-				
+		self.data.addGunHP(self.data.gunRecoverSpeed * dt)
+		self.data.addShieldHP(self.data.shieldRecoverSpeed * dt)
 	
 	#---------------------------------------------------------------
 	# model, ode body, and ode geom setup

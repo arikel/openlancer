@@ -3,7 +3,44 @@
 
 from guiBasics import makeImg
 
-
+class LifeBarre:
+	def __init__(self, maxVal, color="blue"):
+		self.maxVal = float(maxVal)
+		self.val = self.maxVal
+		self.scaleMax = 0.1
+		
+		self.img = makeImg(0, 0, "img/gui/white.png", (self.scaleMax,1,0.01))
+		if color == "blue":
+			self.img.setColor(0.4,0.6,0.9)
+		else:
+			self.img.setColor(0.9,0.56,0.4)
+			
+		self.x = 0
+		self.y = 0
+		
+	def setVal(self, val):
+		self.val = val
+		self.update()
+		
+	def getVal(self):
+		return self.val
+		
+	def setMaxVal(self, val):
+		self.maxVal = val
+		
+	def setPos(self, x, y):
+		self.x = x
+		self.y = y
+		self.update()
+		
+	def update(self):
+		self.scale = self.val*self.scaleMax/self.maxVal
+		self.img.setScale(self.scale,1,0.01)
+		self.img.setPos(self.x+self.scale, 1, self.y)
+		
+	def reparentTo(self, np):
+		self.img.reparentTo(np)
+		
 class CargoBarre:
 	def __init__(self, x, y, color=(1.0,0.3,0.1,1), maxVal=0):
 		self.color = color
@@ -57,7 +94,8 @@ class SpaceBarre:
 		self.H = 600.0
 		self.color = color
 		self.x = -160.0/self.H
-		self.maxVal = 0
+		self.maxVal = maxVal
+		self.val = self.maxVal
 		
 		if pos == 0:
 			self.y = -1+30.0/self.H
@@ -76,13 +114,27 @@ class SpaceBarre:
 	def setVal(self, val):
 		if val > self.maxVal: val = self.maxVal
 		if val < 0: val = 0
+		self.val = val
+		relVal = self.val*16.0/self.maxVal
+		valBlockIndex = int(relVal)
+		frac = relVal - valBlockIndex
+		for i in range(16):
+			if i < valBlockIndex:
+				self.scaleImage(i, 1)
+			elif i == valBlockIndex:
+				self.scaleImage(i, frac)
+			else:
+				self.scaleImage(i, 0)
+	
+	def getVal(self):
+		return self.val
 		
 	def setMaxVal(self, val):
 		self.maxVal = val
 		
 	def scaleImage(self, n, scale):
 		self.images[n].setScale(8.0*scale/self.H, 0, 8.0/self.H)
-		self.images[n].setPos(self.x+20.0/self.H*n - 8.0*(1-scale)/self.H, 0, self.y)
+		self.images[n].setPos(self.x+(20.0/self.H)*n - 8.0*(1-scale)/self.H, 0, self.y)
 		
 	def hide(self):
 		for img in self.images:

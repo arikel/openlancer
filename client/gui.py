@@ -31,16 +31,16 @@ import sys, math, random, os.path, os, re
 
 soundDic = {}
 soundDic["rollover"] = loader.loadSfx("sounds/ui/hover01.ogg")
-#soundDic["rollover"].setVolume(0.4)
+soundDic["rollover"].setVolume(0.4)
 
-soundDic["select_confirm"] = loader.loadSfx("sounds/ui/click01.ogg")
+soundDic["select_confirm"] = loader.loadSfx("sounds/ui/click03.ogg")
 #soundDic["select_confirm"].setVolume(0.4)
 
 
-soundDic["hud_contract"] = loader.loadSfx("sounds/ui/click01.ogg")
+soundDic["hud_contract"] = loader.loadSfx("sounds/ui/click03.ogg")
 #soundDic["hud_contract"].setVolume(0.8)
 
-soundDic["hud_expand"] = loader.loadSfx("sounds/ui/click01.ogg")
+soundDic["hud_expand"] = loader.loadSfx("sounds/ui/click03.ogg")
 #soundDic["hud_expand"].setVolume(0.8)
 
 soundDic["radarSelect"] = loader.loadSfx("sounds/ui/click02.ogg")
@@ -183,7 +183,8 @@ class ItemButtonBase:
 		self.frame2.bind(DGG.ENTER, command=self.setState, extraArgs=[["hover"]])
 		self.frame2.bind(DGG.EXIT, command=self.setState, extraArgs=[["enabled"]])
 		#self.frame2.bind(DGG.B1PRESS, command=self.toggleSelect)
-	
+		
+		self.reparentTo(pixel2d)
 	'''
 	def setOnClick(self, command, extraArgs):
 		self.frame.bind(DGG.B1PRESS, command=command, extraArgs = [extraArgs])
@@ -916,7 +917,7 @@ class SpaceLabel(DirectButton):
 			#relief = None,
 			relief = DGG.FLAT,
 			#relief = DGG.RIDGE,
-			rolloverSound = soundDic["rollover"],
+			rolloverSound = None, #soundDic["rollover"],
 			clickSound = soundDic["select_confirm"],
 			text_font = labelFont,
 			#text_scale = (1.01,1.5,1),
@@ -975,16 +976,16 @@ class SpaceLabel(DirectButton):
 		
 class SpaceGui:
 	def __init__(self, playerdata):
-		self.pdata = playerdata
+		self.playerData = playerdata
 		
 		self.topbar = SpaceTopButtonBar()
 		
 		yellow = (0.65234375, 0.6484375, 0.3359375)
 		blue = (0.25390625, 0.2734375, 0.7421875)
 		red = (0.546875, 0.125, 0.17578125)
-		self.laserHP = SpaceBarre(2,yellow)
-		self.shieldHP = SpaceBarre(1,blue)
-		self.coqueHP = SpaceBarre(0,red)
+		self.laserHP = SpaceBarre(2,yellow, self.playerData.ship.gunHPMax)
+		self.shieldHP = SpaceBarre(1,blue, self.playerData.ship.shieldHPMax)
+		self.coqueHP = SpaceBarre(0,red, self.playerData.ship.coqueHPMax)
 		
 		x = 0.4
 		y = -0.92

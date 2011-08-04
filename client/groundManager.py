@@ -17,7 +17,7 @@ from gui import *
 
 groundBgMusic = {}
 groundBgMusic["hesperida_shop"] = loader.loadSfx("sounds/musics/b423b42.ogg")
-groundBgMusic["hesperida_shop"].setVolume(0.99)
+groundBgMusic["hesperida_shop"].setVolume(1.99)
 
 class GroundManager:
 	def __init__(self, gm):

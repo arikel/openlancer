@@ -55,6 +55,7 @@ taskMgr.add(timer, "shader")
 class Laser:
 	#def __init__(self, wm, originPos, targetPos, speed, shipSpeed, lifeTime, ray = 0.5, bitMask = odeBitMask["npcLaser"]):
 	def __init__(self, wm, originPos, targetPos, shipSpeed, gunData):
+		self.genre = "laser"
 		self.wm = wm
 		self.gunData = gunData
 		

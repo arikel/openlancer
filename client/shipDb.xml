@@ -6,7 +6,7 @@
 	
 	<model>sabreNew</model>
 	
-	<HP coque="100" shield="100" gun="500"></HP>
+	<HP coque="100" shield="100" gun="500" gunRecoverSpeed="200" shieldRecoverSpeed="20"></HP>
 	
 	<pushEngine force="1000" speed="320" sideForce="200" sideForceFactor="0.2"></pushEngine>
 	
@@ -34,7 +34,7 @@
 	
 	<model>generic_mob</model>
 	
-	<HP coque="100" shield="100" gun="500"></HP>
+	<HP coque="100" shield="100" gun="500" gunRecoverSpeed="20" shieldRecoverSpeed="20"></HP>
 	
 	<pushEngine force="1000" speed="320" sideForce="200" sideForceFactor="0.2"></pushEngine>
 	

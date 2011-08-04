@@ -221,15 +221,48 @@ class ShipData:
 		self.gunSlots = [] # list of [point, classe, gunData, active]
 		self.storedGuns = [] # list of unequipped guns : [name]
 		
-	def initHP(self, coque, shield, gun):
+	def initHP(self, coque, shield, gun, grs, srs):
 		self.coqueHPMax = float(coque)
 		self.shieldHPMax = float(shield)
 		self.gunHPMax = float(gun)
 		
-		self.coqueHP = self.coqueHPMax
-		self.shieldHP = self.shieldHPMax
-		self.gunHP = self.gunHPMax
+		self.coqueHP = float(self.coqueHPMax)
+		self.shieldHP = float(self.shieldHPMax)
+		self.gunHP = float(self.gunHPMax)
 		
+		self.gunRecoverSpeed = float(grs)
+		self.shieldRecoverSpeed = float(srs)
+		
+	def addCoqueHP(self, n):
+		self.coqueHP += float(n)
+		if self.coqueHP > self.coqueHPMax:
+			self.coqueHP = self.coqueHPMax
+			
+	def remCoqueHP(self, n):
+		self.coqueHP -= float(n)
+		if self.coqueHP < 0.0:
+			self.coqueHP = 0.0
+	
+	def addShieldHP(self, n):
+		self.shieldHP += float(n)
+		if self.shieldHP > self.shieldHPMax:
+			self.shieldHP = self.shieldHPMax
+			
+	def remShieldHP(self, n):
+		self.shieldHP -= float(n)
+		if self.shieldHP < 0.0:
+			self.shieldHP = 0.0
+	
+	def addGunHP(self, n):
+		self.gunHP += float(n)
+		if self.gunHP > self.gunHPMax:
+			self.gunHP = self.gunHPMax
+			
+	def remGunHP(self, n):
+		self.gunHP -= float(n)
+		if self.gunHP < 0.0:
+			self.gunHP = 0.0
+	
 	def setPushEngine(self, force, speed, sideForce, sideForceFactor):
 		self.pushForce = float(force)
 		self.pushMaxSpeed = float(speed)
@@ -300,7 +333,10 @@ class ShipFileParser(FileParserBase):
 			HPcoque = HP.getAttribute("coque")
 			HPshield = HP.getAttribute("shield")
 			HPgun = HP.getAttribute("gun")
-			shipData.initHP(HPcoque, HPshield, HPgun)
+			gunRecoverSpeed = HP.getAttribute("gunRecoverSpeed")
+			shieldRecoverSpeed = HP.getAttribute("shieldRecoverSpeed")
+			
+			shipData.initHP(HPcoque, HPshield, HPgun, gunRecoverSpeed, shieldRecoverSpeed)
 			
 			PE = self.getNode(ship, "pushEngine")
 			force = PE.getAttribute("force")
