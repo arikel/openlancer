@@ -219,7 +219,7 @@ class SpaceOdeWorldManager(DirectObject):
 		#---------------------------------------------------------------
 		# stardust cloud surrounding the player ship
 		#self.PE = ParticleEngine(self.ship.model.getPos(), nb=100, ray=100, move = True)
-		self.PE = ParticleEngine(self.ship.model, nb=200, ray=150, move = True)
+		self.PE = ParticleEngine(self.ship.model, nb=50, ray=100, move = True)
 		self.PE.stop()
 		
 		#---------------------------------------------------------------
