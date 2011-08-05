@@ -63,7 +63,7 @@ class MainButton(DirectButton):
 			clickSound = soundDic["select_confirm"],
 			text_font = FONT3,
 			#text_scale = (0.01,0.0125,1),
-			text_scale = (0.06,0.08,1),
+			text_scale = (0.06,0.08,1.0),
 			text_fg = (0.8,0.9,1,1),
 			#text_shadow = (0.25,0.25,0.25,1),
 			text_bg = (0,0,0,0.0),
@@ -92,10 +92,11 @@ class MainMenu:
 		self.buttons = []
 		step = 0.3
 		start = 0.45
-		b = MainButton(0, start, "NEW GAME")
-		b2 = MainButton(0, start-step, "LOAD GAME")
-		b3 = MainButton(0, start-2*step, "SETTINGS")
-		b4 = MainButton(0, start-3*step, "QUIT")
+		xalign = -0.7
+		b = MainButton(xalign, start, "NEW GAME")
+		b2 = MainButton(xalign, start-step, "LOAD GAME")
+		b3 = MainButton(xalign, start-2*step, "SETTINGS")
+		b4 = MainButton(xalign, start-3*step, "QUIT")
 		self.buttons.append(b)
 		self.buttons.append(b2)
 		self.buttons.append(b3)
@@ -904,12 +905,21 @@ class SpaceLabel(DirectButton):
 	def __init__(self, x, y, genre, name):
 		self.x = x
 		self.y = y
+		self.H = base.win.getYSize()
+		#self.scaleX = 3.8
+		#self.scaleY = 4.61
+		
+		self.scaleX = 20.0
+		self.scaleY = 20.0
+		
+		self.textScale = (self.scaleX/self.H,self.scaleY/self.H,1)
+		
 		DirectButton.__init__(self,
-			frameSize = (-0.2,0.2,-0.03,0.03),
+			frameSize = (-0.25,0.25,-0.025,0.025),
 			pos = (x, 1, y),
 			pad = (0,0),
 			borderWidth=(0.008,0.008),
-			frameColor=(0.2,0.8,1,0.1),
+			frameColor=(0.2,0.8,1,0.05),
 			pressEffect = None,
 			#scale = (0.4, 1, 0.1),
 			#relief = None,
@@ -922,30 +932,46 @@ class SpaceLabel(DirectButton):
 			text_font = labelFont,
 			#text_scale = (1.01,1.5,1),
 			#text_scale = (0.0045,0.005,1),
-			text_scale = (18.0/600.0,18.0/600.0,1),
+			text_scale = self.textScale,
 			text_fg = (0.8,0.9,1,1),
 			#text_shadow = (0.25,0.25,0.25,1),
 			text_bg = (0,0,0,0.0),
-			text = name,
+			#text = name,
+			text = "",
 			text_align = TextNode.ALeft,
-			text_pos = (-0.125, -0.016),
+			text_pos = (-0.1751, -0.016),
 			#geom = None
 			text_mayChange = True,
 		)
 		self.initialiseoptions(SpaceLabel)
 		
-		self.bind(DGG.ENTER, command=self.onHover, extraArgs=[self])
-		self.bind(DGG.EXIT, command=self.onOut, extraArgs=[self])
+		#self.bind(DGG.ENTER, command=self.onHover, extraArgs=[self])
+		#self.bind(DGG.EXIT, command=self.onOut, extraArgs=[self])
 		
 		path = "img/gui/label" + genre.title() + ".png"
-		self.img = makeImg(-0.16, 0, path, 0.025)
+		self.img = makeImg(-0.21, 0, path, 0.025)
 		self.img.reparentTo(self)
 		
 		self.distText = makeMsgLeft(0.11, - 0.016, "100")
 		self.distText["font"] = labelFont
-		self.distText["scale"] = (0.0045,0.005,1)
+		self.distText["scale"] = self.textScale
 		self.distText["fg"] = (0.8,0.9,1,1)
 		self.distText.reparentTo(self)
+		
+		self.nameText = makeMsgLeft(-0.174, - 0.016, name)
+		self.nameText["font"] = labelFont
+		self.nameText["scale"] = self.textScale
+		self.nameText["fg"] = (0.8,0.9,1,1)
+		self.nameText.reparentTo(self)
+		
+	def updateSize(self, x, y):
+		self.scaleX = self.scaleX+float(x)
+		self.scaleY = self.scaleY+float(y)
+		self.textScale = (self.scaleX/self.H,self.scaleY/self.H,1)
+		
+		self["text_scale"] = self.textScale
+		self.distText["scale"] = self.textScale
+		print "current text scale : %s, %s" % (self.scaleX, self.scaleY)
 		
 	def onHover(self, extraArgs, sentArgs):
 		self["text_fg"] = (0.95,0.85,0.2,1)
@@ -996,9 +1022,10 @@ class SpaceGui:
 		self.speedImg = makeImg(x, y, "img/gui/speed.png", (0.11,1.0,0.07))
 		
 		self.label1 = SpaceLabel(-0.8,-0.7,"loot", "item 1")
+		self.label2 = SpaceLabel(-0.8,-0.76,"loot", "Some spaceship")
 		
 		self.items = [self.topbar, self.laserHP, self.shieldHP, self.coqueHP, self.speedMsg, self.speedImg,
-			self.label1
+			self.label1, self.label2
 		]
 		
 		self.hide()

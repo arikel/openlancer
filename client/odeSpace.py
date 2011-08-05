@@ -175,6 +175,11 @@ class SpaceOdeWorldManager(DirectObject):
 		self.picker = OdePicker(self)
 		
 		
+		#-------------------------------------------------------------------
+		# GUI
+		#-------------------------------------------------------------------
+		self.gui = SpaceGui(self.gm.playerData)
+		
 		#---------------------------------------------------------------
 		# input handling
 		self.keyMap = {}
@@ -219,7 +224,7 @@ class SpaceOdeWorldManager(DirectObject):
 		#---------------------------------------------------------------
 		# stardust cloud surrounding the player ship
 		#self.PE = ParticleEngine(self.ship.model.getPos(), nb=100, ray=100, move = True)
-		self.PE = ParticleEngine(self.ship.model, nb=50, ray=100, move = True)
+		self.PE = ParticleEngine(self.ship.model, nb=40, ray=50, move = True)
 		self.PE.stop()
 		
 		#---------------------------------------------------------------
@@ -235,16 +240,6 @@ class SpaceOdeWorldManager(DirectObject):
 		self.currentSkyName = skyName
 		self.sky.stop()
 		#self.sky.currentModel.hide(BitMask32.bit(1))
-		
-		
-		#-------------------------------------------------------------------
-		# GUI
-		#-------------------------------------------------------------------
-		self.gui = SpaceGui(self.gm.playerData)
-		
-		#self.msgSpeed = OnscreenText(pos=(-0.98, -0.755), fg = (1,1,1,1), scale = 0.05, align=TextNode.ALeft, mayChange = 1)
-		#self.msgSpeed["font"] = FONT
-		#self.msgSpeed["scale"] = (0.04,0.05,1.0)
 		
 		# BG music
 		self.bgMusic = spaceBgMusic["hesperida_space"]
@@ -272,6 +267,16 @@ class SpaceOdeWorldManager(DirectObject):
 		self.accept("space", self.toggleMode)
 		self.accept("mouse1", self.selectClick)
 		self.accept("p", self.spawnShip)
+		
+		
+		self.accept("arrow_up", self.updateSize, [0.0,0.002])
+		self.accept("arrow_down", self.updateSize, [0.0,-0.002])
+		self.accept("arrow_left", self.updateSize, [-0.002,0.0])
+		self.accept("arrow_right", self.updateSize, [0.002,0.0])
+		
+	def updateSize(self, x, y):
+		self.gui.label1.updateSize(x, y)
+		self.gui.label2.updateSize(x, y)
 		
 	def start(self):
 		#print "Starting the space world."
@@ -314,7 +319,7 @@ class SpaceOdeWorldManager(DirectObject):
 			#print "Found no world running to stop though..."
 
 		self.hideAll()
-		self.ignoreAll()
+		self.ignoreAll() # inherited from DirectObject
 		self.gm.crosshair.setMode(1)
 		self.bgMusic.stop()
 		
@@ -373,6 +378,7 @@ class SpaceOdeWorldManager(DirectObject):
 		self.gui.destroy()
 		self.radar.destroy()
 		self.ship.destroy()
+		self.light.destroy()
 		
 	def setKey(self, k, v):
 		self.keyMap[k] = v

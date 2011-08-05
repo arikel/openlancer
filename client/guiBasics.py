@@ -50,12 +50,12 @@ textColors["Yellow"] = ((1,1,0,1), (0,0,0,1))
 textColors["gold"] = ((1,0.75,0,1), (1,1,1,0))
 textColors["Gold"] = ((1,0.75,0,1), (0,0,0,1))
 
-FONT0 = loader.loadFont("fonts/arial.ttf")
-FONT_SCALE0 = 0.05
-FONT1 = loader.loadFont("fonts/euro.egg")
-FONT_SCALE1 = (0.04, 0.05, 0.05)
-FONT2 = loader.loadFont("fonts/cour.ttf")
-FONT_SCALE2 = 0.05
+#FONT0 = loader.loadFont("fonts/arial.ttf")
+#FONT_SCALE0 = 0.05
+#FONT1 = loader.loadFont("fonts/euro.egg")
+#FONT_SCALE1 = (0.04, 0.05, 0.05)
+#FONT2 = loader.loadFont("fonts/cour.ttf")
+#FONT_SCALE2 = 0.05
 
 FONT3 = loader.loadFont("fonts/Vera.ttf")
 #FONT3.setRenderMode(TextFont.RMSolid)
@@ -79,17 +79,17 @@ FONT_SCALE3 = (0.028, 0.04, 1)
 FONT = FONT3
 FONT_SCALE = FONT_SCALE3
 
-#labelFont = loader.loadFont("fonts/arial.ttf", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
-labelFont = loader.loadFont("fonts/isocpeur.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
-#labelFont.setPixelsPerUnit(80)
-#labelFont.setPageSize(64,64)
-#labelFont.setPointSize(60)
+labelFont = loader.loadFont("fonts/arial2.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+#labelFont = loader.loadFont("fonts/isocpeur2.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+#labelFont.setPixelsPerUnit(1)
+#labelFont.setPageSize(128,128)
+#labelFont.setPointSize(64)
 #labelFont.setRenderMode(TextFont.RMWireframe)
 #labelFont.setRenderMode(TextFont.RMPolygon)
 #labelFont.setRenderMode(TextFont.RMSolid)
 #labelFont.setRenderMode(TextFont.RMInvalid)
 #labelFont.setPointSize(72) # a value of 73 or more crashes Panda/Python
-#labelFont.setSpaceAdvance(2) # decrease as point size is decrease
+#labelFont.setSpaceAdvance(1.0) # decrease as point size is decrease
 #labelFont.setLineHeight(5)
 
 #-------------------------------------------------------------------------------

@@ -54,6 +54,10 @@ class LightManager:
 		
 		self.setPos((0,-20,2))
 		
+	def destroy(self):
+		self.lightCenter.remove()
+		render.setLightOff()
+		
 	def setPos(self, pos):
 		self.lightCenter.setPos(pos)
 		#self.light.setPos(pos)
