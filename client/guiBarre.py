@@ -33,6 +33,15 @@ class LifeBarre:
 		self.y = y
 		self.update()
 		
+	def hide(self):
+		self.img.hide()
+		
+	def show(self):
+		self.img.show()
+		
+	def destroy(self):
+		self.img.destroy()
+		
 	def update(self):
 		self.scale = self.val*self.scaleMax/self.maxVal
 		self.img.setScale(self.scale,1,0.01)

@@ -224,7 +224,7 @@ class SpaceOdeWorldManager(DirectObject):
 		
 		#---------------------------------------------------------------
 		# trail of the player ship, TODO : move that to the OdeShip class and update ShipData to handle it
-		self.trailPE = AriTrail(self.ship.model,10,0.0)
+		self.trailPE = AriTrail(self.ship.model,20,0.0)
 		#self.trailPE2 = AriTrail(self.gun2,10,0.0)
 		
 		#skyName = "skyBox06"
@@ -525,7 +525,7 @@ class SpaceOdeWorldManager(DirectObject):
 	# ship handling
 	#-------------------------------------------------------------------
 	def spawnShip(self):
-		NPCShip = Ship(self, shipDb["npc"])
+		NPCShip = Ship(self, shipDb["npc"].makeCopy())
 		NPCShip.geom.setCollideBits(odeBitMask["npc"])
 		NPCShip.geom.setCategoryBits(odeBitMask["npc"])
 		

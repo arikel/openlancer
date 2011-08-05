@@ -221,6 +221,35 @@ class ShipData:
 		self.gunSlots = [] # list of [point, classe, gunData, active]
 		self.storedGuns = [] # list of unequipped guns : [name]
 		
+	def makeCopy(self):
+		newdata = ShipData(self.name)
+		newdata.model = self.model
+		
+		newdata.gunSlots.extend(self.gunSlots)
+		newdata.storedGuns.extend(self.storedGuns)
+		
+		newdata.initHP(
+			self.coqueHPMax,
+			self.shieldHPMax,
+			self.gunHPMax,
+			self.gunRecoverSpeed,
+			self.shieldRecoverSpeed)
+			
+		newdata.setPushEngine(
+			self.pushForce,
+			self.pushMaxSpeed,
+			self.pushSideForce,
+			self.pushSideForceFactor)
+			
+		newdata.setSteerEngine(
+			self.steerHForce, self.steerHMaxSpeed,
+			self.steerPForce, self.steerPMaxSpeed,
+			self.steerRForce, self.steerRMaxSpeed)
+			
+		newdata.setCargo(self.cargo.room)
+			
+		return newdata
+		
 	def initHP(self, coque, shield, gun, grs, srs):
 		self.coqueHPMax = float(coque)
 		self.shieldHPMax = float(shield)
@@ -308,8 +337,10 @@ class ShipData:
 	
 	def setCargo(self, n):
 		self.cargo = CargoData(n)
-
-
+	
+	
+		
+		
 class ShipFileParser(FileParserBase):
 	def __init__(self):
 		f = open("shipDb.xml")

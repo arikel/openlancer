@@ -21,7 +21,7 @@ class OdeRadar:
 		
 		self.frame = DirectFrame(
 			frameSize = (-0.25,0.25,-0.25,0.25),
-			frameColor=(0.2, 0.6, 0.5, 0.1),
+			frameColor=(0.2, 0.6, 0.5, 0.0),
 			pos = (0,0,0),
 			pad = (0,0),
 			borderWidth=(0.0,0.0),

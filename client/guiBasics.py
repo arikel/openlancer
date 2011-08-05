@@ -79,19 +79,19 @@ FONT_SCALE3 = (0.028, 0.04, 1)
 FONT = FONT3
 FONT_SCALE = FONT_SCALE3
 
-labelFont = loader.loadFont("fonts/arial.ttf", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+#labelFont = loader.loadFont("fonts/arial.ttf", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+labelFont = loader.loadFont("fonts/isocpeur.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
 #labelFont.setPixelsPerUnit(80)
-labelFont.setPageSize(64,64)
+#labelFont.setPageSize(64,64)
 #labelFont.setPointSize(60)
 #labelFont.setRenderMode(TextFont.RMWireframe)
 #labelFont.setRenderMode(TextFont.RMPolygon)
-labelFont.setRenderMode(TextFont.RMSolid)
+#labelFont.setRenderMode(TextFont.RMSolid)
 #labelFont.setRenderMode(TextFont.RMInvalid)
-labelFont.setPointSize(72) # a value of 73 or more crashes Panda/Python
-labelFont.setSpaceAdvance(2) # decrease as point size is decrease
-labelFont.setLineHeight(5)
-minFilter=Texture.FTNearest,
-magFilter=Texture.FTNearest
+#labelFont.setPointSize(72) # a value of 73 or more crashes Panda/Python
+#labelFont.setSpaceAdvance(2) # decrease as point size is decrease
+#labelFont.setLineHeight(5)
+
 #-------------------------------------------------------------------------------
 # divers
 #-------------------------------------------------------------------------------
