@@ -134,6 +134,9 @@ class ParticleEngine:
 			l = [randVec()*100,randVec()*100,187,.1,Vec4(random(),random(),random(),1)]
 			lines.append(l)
 		'''
+		
+		self.speed = 0.0
+		
 		self.start()
 		
 	def setPos(self, pos):
@@ -147,9 +150,6 @@ class ParticleEngine:
 	def stop(self):
 		if (taskMgr.hasTaskNamed("drawStarDust")):
 			taskMgr.remove("drawStarDust")
-		
-		#self.generator.begin(base.cam,render)
-		#self.generator.end()
 		self.generatorNode.detachNode()
 		
 		
@@ -162,8 +162,11 @@ class ParticleEngine:
 		for p in self.particles:
 			p.setOriginPos(self.pos)
 			#print "Position origine : %s" % (self.pos)
-			self.generator.billboard(p.pos,p.frame,p.size,p.color)
-		#self.generator.segment(Vec3(0,0,10),Vec3(self.pos),1,sin(t*20)*0.2+0.5,Vec4(0,0,1,1))
+			#self.generator.billboard(p.pos,p.frame,p.size,p.color)
+			direction = render.getRelativeVector(self.np, (0,self.speed/10.0,0))
+			alpha = min(self.speed/100.0, 1)
+			#direction = Vec3(direction)
+			self.generator.segment(p.pos,p.pos+direction,1,0.5,Vec4(1,1,1,alpha))
 		
 		'''
 		for start,stop,frame,size,color in lines:
@@ -171,6 +174,18 @@ class ParticleEngine:
 		'''
 		self.generator.end()
 		return Task.cont
+		
+	def draw(self, speed):
+		self.pos = self.np.getPos()
+		self.generator.begin(base.cam,render)
+		for p in self.particles:
+			p.setOriginPos(self.pos)
+			#direction = render.getRelativeVector(self.np, (0,speed/5.0,0))
+			#direction = Vec3(0,speed,0)
+			#self.generator.segment(p.pos,p.pos+direction,1,0.5,Vec4(1,1,1,1))
+			self.generator.billboard(p.pos,1,p.size,p.color)
+		self.generator.end()
+		
 		
 	def destroy(self):
 		self.stop()

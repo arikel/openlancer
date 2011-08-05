@@ -605,7 +605,8 @@ class SpaceOdeWorldManager(DirectObject):
 			
 		self.shipSpeed = self.ship.body.getLinearVel()
 		self.currentSpeed = self.shipSpeed.length()
-		
+		self.PE.speed = self.currentSpeed
+		#self.PE.draw(self.currentSpeed)
 		
 		
 		dx = min(dx, 1.0)

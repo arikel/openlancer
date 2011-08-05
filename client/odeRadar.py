@@ -150,3 +150,5 @@ class OdeRadar:
 		elif self.targetGenre == "loot":
 			self.bar1.setVal(0)
 			#self.bar2.setVal(self.wm.lootDic[self.targetId].data.coqueHP)
+			self.bar2.setVal(self.bar2.maxVal)
+			
