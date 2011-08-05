@@ -89,10 +89,10 @@ class OdeRadar:
 			self.clearRadar()
 			
 	def clearRadar(self):
-		self.frame.hide()
+		self.hide()
 	
 	def hide(self):
-		self.clearRadar()
+		self.frame.hide()
 	
 	def show(self):
 		self.frame.show()
@@ -100,6 +100,11 @@ class OdeRadar:
 	def destroy(self):
 		self.frame.destroy()
 	
+	def clearTarget(self):
+		self.targetNP = None
+		self.targetId = None
+		
+		
 	def setRadar(self):
 		
 		pos = self.targetNP.getPos(render)

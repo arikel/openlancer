@@ -65,6 +65,7 @@ class Ship(Body):
 		self.initGuns()
 		
 		self.hasPilot = False
+		self.alive = True
 		
 	def destroy(self):
 		#self.model.detachNode()
@@ -91,6 +92,8 @@ class Ship(Body):
 		self.updateLasers(dt)
 		self.reduceAngVel()
 		self.reduceLinVel()
+		if self.data.coqueHP <= 0:
+			self.alive = False
 		#self.geomVisual.setPos(0,self.getLinSpeed()*dt*10, 0)
 		#self.geomVisual.setPos(self.body.getLinearVel())
 	#---------------------------------------------------------------

@@ -269,10 +269,10 @@ class SpaceOdeWorldManager(DirectObject):
 		self.accept("p", self.spawnShip)
 		
 		
-		self.accept("arrow_up", self.updateSize, [0.0,0.002])
-		self.accept("arrow_down", self.updateSize, [0.0,-0.002])
-		self.accept("arrow_left", self.updateSize, [-0.002,0.0])
-		self.accept("arrow_right", self.updateSize, [0.002,0.0])
+		self.accept("arrow_up", self.updateSize, [0.0,0.1])
+		self.accept("arrow_down", self.updateSize, [0.0,-0.1])
+		self.accept("arrow_left", self.updateSize, [-0.1,0.0])
+		self.accept("arrow_right", self.updateSize, [0.1,0.0])
 		
 	def updateSize(self, x, y):
 		self.gui.label1.updateSize(x, y)
@@ -399,21 +399,24 @@ class SpaceOdeWorldManager(DirectObject):
 		if ((id1 in self.lootDic) and (id2 in self.laserDic)):
 			#print "Collision cube / laser!!! l'oeuf tombe sur la pierre!"
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
-			audio3d.attachSoundToObject(exploSound1, self.lootDic[id1].model)
+			#audio3d.attachSoundToObject(exploSound1, self.lootDic[id1].model)
+			audio3d.attachSoundToObject(exploSound1, self.laserDic[id2].model)
 			exploSound1.play()
 			self.destroyLaser(id2)
 		
 		elif ((id2 in self.lootDic) and (id1 in self.laserDic)):
 			#print "Collision laser / cube!!! This is gonna hurt!"
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
-			audio3d.attachSoundToObject(exploSound1, self.lootDic[id2].model)
+			#audio3d.attachSoundToObject(exploSound1, self.lootDic[id2].model)
+			audio3d.attachSoundToObject(exploSound1, self.laserDic[id1].model)
 			exploSound1.play()
 			self.destroyLaser(id1)
 			
-		if ((id1 in self.shipDic) and (id2 in self.laserDic)):
+		elif ((id1 in self.shipDic) and (id2 in self.laserDic)):
 			#print "Collision ship / laser!"
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
-			audio3d.attachSoundToObject(exploSound1, self.shipDic[id1].model)
+			#audio3d.attachSoundToObject(exploSound1, self.shipDic[id1].model)
+			audio3d.attachSoundToObject(exploSound1, self.laserDic[id2].model)
 			exploSound1.play()
 			coqueDmg = self.laserDic[id2].gunData.coqueDmg
 			shieldDmg = self.laserDic[id2].gunData.shieldDmg
@@ -425,7 +428,8 @@ class SpaceOdeWorldManager(DirectObject):
 		elif ((id2 in self.shipDic) and (id1 in self.laserDic)):
 			#print "Collision laser / ship!"
 			#exploSound1 = audio3d.loadSfx("sounds/space/explosion01.ogg")
-			audio3d.attachSoundToObject(exploSound1, self.shipDic[id2].model)
+			#audio3d.attachSoundToObject(exploSound1, self.shipDic[id2].model)
+			audio3d.attachSoundToObject(exploSound1, self.laserDic[id1].model)
 			exploSound1.play()
 			coqueDmg = self.laserDic[id1].gunData.coqueDmg
 			shieldDmg = self.laserDic[id1].gunData.shieldDmg
@@ -512,6 +516,7 @@ class SpaceOdeWorldManager(DirectObject):
 				del laser
 				
 	def destroyLaser(self, id):
+		audio3d.detachSound(exploSound1)
 		self.laserDic[id].destroy()
 		self.laserList.remove(self.laserDic[id])
 		del self.laserDic[id]
@@ -549,6 +554,12 @@ class SpaceOdeWorldManager(DirectObject):
 	def updateShips(self, dt):
 		for ship in self.shipList:
 			ship.update(dt)
+			if ship.alive is False:
+				id = ship.getId()
+				if ship.model is self.radar.targetNP:
+					self.radar.clearTarget()
+				self.destroyShip(id)
+				print "Ship destroyed"
 	
 	def destroyShip(self, geomId):
 		self.shipDic[geomId].destroy()

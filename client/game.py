@@ -7,8 +7,8 @@ import os
 from pandac.PandaModules import *
 loadPrcFileData("setup", """sync-video 0
 show-frame-rate-meter #t
-#win-size 800 600
-win-size 1024 768
+win-size 800 600
+#win-size 1024 768
 #win-size 1280 960
 #win-size 1280 1024
 win-fixed-size 1

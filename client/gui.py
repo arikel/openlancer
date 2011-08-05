@@ -906,16 +906,16 @@ class SpaceLabel(DirectButton):
 		self.x = x
 		self.y = y
 		self.H = base.win.getYSize()
-		#self.scaleX = 3.8
-		#self.scaleY = 4.61
+		self.scaleX = 24.1
+		self.scaleY = 25.3
 		
-		self.scaleX = 20.0
-		self.scaleY = 20.0
+		#self.scaleX = 20.0
+		#self.scaleY = 20.0
 		
 		self.textScale = (self.scaleX/self.H,self.scaleY/self.H,1)
 		
 		DirectButton.__init__(self,
-			frameSize = (-0.25,0.25,-0.025,0.025),
+			frameSize = (-0.26,0.26,-0.025,0.025),
 			pos = (x, 1, y),
 			pad = (0,0),
 			borderWidth=(0.008,0.008),
@@ -928,7 +928,7 @@ class SpaceLabel(DirectButton):
 			relief = DGG.FLAT,
 			#relief = DGG.RIDGE,
 			rolloverSound = None, #soundDic["rollover"],
-			clickSound = soundDic["select_confirm"],
+			clickSound = soundDic["hud_expand"],
 			text_font = labelFont,
 			#text_scale = (1.01,1.5,1),
 			#text_scale = (0.0045,0.005,1),
@@ -936,10 +936,10 @@ class SpaceLabel(DirectButton):
 			text_fg = (0.8,0.9,1,1),
 			#text_shadow = (0.25,0.25,0.25,1),
 			text_bg = (0,0,0,0.0),
-			#text = name,
-			text = "",
+			text = name,
+			#text = "",
 			text_align = TextNode.ALeft,
-			text_pos = (-0.1751, -0.016),
+			text_pos = (-0.195, -0.016),
 			#geom = None
 			text_mayChange = True,
 		)
@@ -949,20 +949,22 @@ class SpaceLabel(DirectButton):
 		#self.bind(DGG.EXIT, command=self.onOut, extraArgs=[self])
 		
 		path = "img/gui/label" + genre.title() + ".png"
-		self.img = makeImg(-0.21, 0, path, 0.025)
+		self.img = makeImg(-0.23, 0, path, 0.025)
 		self.img.reparentTo(self)
 		
-		self.distText = makeMsgLeft(0.11, - 0.016, "100")
+		self.distText = makeMsgLeft(0.14, - 0.016, "100")
 		self.distText["font"] = labelFont
 		self.distText["scale"] = self.textScale
 		self.distText["fg"] = (0.8,0.9,1,1)
 		self.distText.reparentTo(self)
 		
+		'''
 		self.nameText = makeMsgLeft(-0.174, - 0.016, name)
 		self.nameText["font"] = labelFont
 		self.nameText["scale"] = self.textScale
 		self.nameText["fg"] = (0.8,0.9,1,1)
 		self.nameText.reparentTo(self)
+		'''
 		
 	def updateSize(self, x, y):
 		self.scaleX = self.scaleX+float(x)
@@ -986,8 +988,8 @@ class SpaceLabel(DirectButton):
 		self.distText["fg"] = (0.8,0.9,1,1)
 		
 	def destroy(self):
-		self.img.destroy()
-		self.distText.destroy()
+		#self.img.destroy()
+		#self.distText.destroy()
 		DirectButton.destroy(self)
 		
 		

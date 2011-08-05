@@ -79,19 +79,21 @@ FONT_SCALE3 = (0.028, 0.04, 1)
 FONT = FONT3
 FONT_SCALE = FONT_SCALE3
 
-labelFont = loader.loadFont("fonts/arial2.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
-#labelFont = loader.loadFont("fonts/isocpeur2.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+
+labelFont = loader.loadFont("fonts/arial.ttf", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
 #labelFont.setPixelsPerUnit(1)
-#labelFont.setPageSize(128,128)
-#labelFont.setPointSize(64)
+labelFont.setPageSize(512,16)
+labelFont.setPointSize(10)
 #labelFont.setRenderMode(TextFont.RMWireframe)
 #labelFont.setRenderMode(TextFont.RMPolygon)
-#labelFont.setRenderMode(TextFont.RMSolid)
+labelFont.setRenderMode(TextFont.RMSolid)
 #labelFont.setRenderMode(TextFont.RMInvalid)
 #labelFont.setPointSize(72) # a value of 73 or more crashes Panda/Python
-#labelFont.setSpaceAdvance(1.0) # decrease as point size is decrease
-#labelFont.setLineHeight(5)
+labelFont.setSpaceAdvance(0.5) # decrease as point size is decrease
+labelFont.setLineHeight(5)
 
+labelFont2 = loader.loadFont("fonts/arial2.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
+labelFont3 = loader.loadFont("fonts/arial3.egg", minFilter=Texture.FTNearest, magFilter=Texture.FTNearest)
 #-------------------------------------------------------------------------------
 # divers
 #-------------------------------------------------------------------------------
